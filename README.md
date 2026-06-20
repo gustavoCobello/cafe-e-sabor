@@ -1,4 +1,4 @@
-# Cafe Aroma e Sabor - Sistema de Gestao de Estoque
+# Sistema de Gestão de Estoque
 
 Sistema web para controle de estoque desenvolvido como projeto de conclusao do 3 semestre do curso de **Desenvolvimento de Sistemas** com **Java**, utilizando Spring Boot.
 
