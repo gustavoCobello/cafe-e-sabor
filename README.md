@@ -210,6 +210,3 @@ Projeto de conclusao do 3 semestre de Desenvolvimento de Sistemas.
 - Demais integrantes da equipe
 
 ---
-
-*Cafe Aroma e Sabor - Sistema de Gestao de Estoque*
-*2026*
