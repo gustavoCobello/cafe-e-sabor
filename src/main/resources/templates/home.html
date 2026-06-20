@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal - Café Aroma & Sabor</title>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/cursor.css}">
+</head>
+<body>
+    <header class="topbar">
+        <a th:href="@{/home}" class="topbar-brand">
+            <span class="brand-icon"><i class="ph ph-coffee"></i></span>
+            <span>Café Aroma &amp; Sabor</span>
+        </a>
+        <div class="topbar-right">
+            <div class="topbar-user">
+                <span class="user-icon"><i class="ph ph-user"></i></span>
+                <span sec:authentication="name">Usuário</span>
+            </div>
+            <form th:action="@{/logout}" method="POST" style="display:inline;">
+                <button type="submit" class="btn-logout">Sair</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1 class="page-title">Painel Principal</h1>
+        <p class="page-subtitle">Bem-vindo ao sistema de gestão de estoque. Selecione uma funcionalidade abaixo.</p>
+
+        <div class="dashboard-grid">
+            <a th:href="@{/produto}" class="dashboard-card">
+                <div class="card-icon"><i class="ph ph-clipboard-text"></i></div>
+                <h3>Cadastro de Produtos</h3>
+                <p>Gerenciar cadastro de produtos: criar, editar, excluir e buscar itens do almoxarifado.</p>
+            </a>
+
+            <a th:href="@{/estoque}" class="dashboard-card">
+                <div class="card-icon"><i class="ph ph-chart-bar"></i></div>
+                <h3>Gestão de Estoque</h3>
+                <p>Registrar entradas e saídas, acompanhar níveis de estoque e visualizar histórico de movimentações.</p>
+            </a>
+        </div>
+    </main>
+
+    <script th:src="@{/js/animacoes.js}"></script>
+    <script th:src="@{/js/cursor.js}"></script>
+</body>
+</html>

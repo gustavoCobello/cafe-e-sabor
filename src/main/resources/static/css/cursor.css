@@ -1,0 +1,86 @@
+/* ============================================
+   CUSTOM CURSOR - MINIMALIST SQUARE
+   ============================================ */
+
+* {
+  cursor: none !important;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease, height 0.15s ease, opacity 0.15s ease;
+  will-change: transform;
+}
+
+.cursor-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 999998;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.3s ease;
+  will-change: transform;
+}
+
+/* Estado: hover em elemento clicável */
+.cursor-dot.cursor--hover {
+  width: 4px;
+  height: 4px;
+  opacity: 0.6;
+}
+
+.cursor-outline.cursor--hover {
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+}
+
+/* Estado: clique */
+.cursor-dot.cursor--click {
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+}
+
+.cursor-outline.cursor--click {
+  width: 24px;
+  height: 24px;
+  opacity: 1;
+}
+
+/* Estado: texto / input */
+.cursor-dot.cursor--text {
+  width: 3px;
+  height: 28px;
+  opacity: 0.9;
+}
+
+.cursor-outline.cursor--text {
+  width: 3px;
+  height: 28px;
+  opacity: 0;
+}
+
+/* Estado: escondido */
+.cursor-dot.cursor--hidden,
+.cursor-outline.cursor--hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}

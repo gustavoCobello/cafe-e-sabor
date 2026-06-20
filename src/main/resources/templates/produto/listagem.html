@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos - Café Aroma & Sabor</title>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/cursor.css}">
+</head>
+<body>
+    <header class="topbar">
+        <a th:href="@{/home}" class="topbar-brand">
+            <span class="brand-icon"><i class="ph ph-coffee"></i></span>
+            <span>Café Aroma &amp; Sabor</span>
+        </a>
+        <div class="topbar-right">
+            <div class="topbar-user">
+                <span class="user-icon"><i class="ph ph-user"></i></span>
+                <span sec:authentication="name">Usuário</span>
+            </div>
+            <form th:action="@{/logout}" method="POST" style="display:inline;">
+                <button type="submit" class="btn-logout">Sair</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a th:href="@{/home}">Painel Principal</a> &gt; Cadastro de Produtos
+        </div>
+
+        <h1 class="page-title">Cadastro de Produtos</h1>
+        <p class="page-subtitle">Gerencie os produtos do almoxarifado: cadastre, edite ou exclua itens.</p>
+
+        <div class="table-card">
+            <div class="table-header">
+                <h2>Produtos Cadastrados</h2>
+                <div class="search-box">
+                    <form th:action="@{/produto}" method="GET">
+                        <input type="text" name="busca" th:value="${busca}" placeholder="Buscar por nome...">
+                        <button type="submit" class="btn-search">Buscar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Lote</th>
+                            <th>Est. Mínimo</th>
+                            <th>Qtd. Atual</th>
+                            <th>Validade</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="produto : ${produtos}">
+                            <td><strong th:text="${produto.nome}">Nome</strong></td>
+                            <td th:text="${produto.descricao != null ? produto.descricao : '-'}">Descrição</td>
+                            <td th:text="${produto.lote}">Lote</td>
+                            <td th:text="${produto.estoqueMinimo}">0</td>
+                            <td th:text="${produto.quantidade}">0</td>
+                            <td th:text="${#temporals.format(produto.validade, 'dd/MM/yyyy')}">01/01/2026</td>
+                            <td>
+                                <span th:classappend="${produto.quantidade <= 0 || #temporals.format(produto.validade, 'yyyy-MM-dd') <= #temporals.format(#temporals.createNow(), 'yyyy-MM-dd')} ? 'status-danger' : (${produto.quantidade <= produto.estoqueMinimo} ? 'status-warning' : 'status-ok')"
+                                      class="status-badge">
+                                    <span th:if="${produto.quantidade <= 0 || #temporals.format(produto.validade, 'yyyy-MM-dd') <= #temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">Crítico</span>
+                                    <span th:if="${produto.quantidade > 0 && produto.quantidade <= produto.estoqueMinimo}">Atenção</span>
+                                    <span th:if="${produto.quantidade > produto.estoqueMinimo && #temporals.format(produto.validade, 'yyyy-MM-dd') > #temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">Ok</span>
+                                </span>
+                            </td>
+                            <td class="actions-cell">
+                                <a th:href="@{/produto/editar/{id}(id=${produto.id})}" class="btn btn-secondary btn-sm">Editar</a>
+                                <a th:href="@{/produto/excluir/{id}(id=${produto.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty-state" th:if="${#lists.isEmpty(produtos)}">
+                <div class="empty-icon"><i class="ph ph-package"></i></div>
+                <p>Nenhum produto cadastrado. Utilize o formulário abaixo para adicionar o primeiro produto.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px; text-align: center;">
+            <a th:href="@{/produto/cadastrar}" class="btn btn-primary">Cadastrar Novo Produto</a>
+        </div>
+    </main>
+
+    <script th:src="@{/js/animacoes.js}"></script>
+    <script th:src="@{/js/cursor.js}"></script>
+</body>
+</html>
